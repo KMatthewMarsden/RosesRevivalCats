@@ -7,7 +7,7 @@ bio_url = "https://www.twitterbiogenerator.com/generate"
 
 
 def get_cat_fact():
-    response = requests.get(fact_url, user_agent=user_agent)
+    response = requests.get(fact_url, headers={'User-agent': user_agent})
     if not response.ok:
         return None
     fact = response.json()["data"][0]
@@ -15,7 +15,7 @@ def get_cat_fact():
 
 
 def get_bio():
-    response = requests.get(bio_url, user_agent=user_agent)
+    response = requests.get(bio_url, headers={'User-agent': user_agent})
     if not response.ok:
         return "Didn't know what to put in my bio :)"
     bio = response.content
