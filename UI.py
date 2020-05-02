@@ -23,7 +23,7 @@ label = tkinter.Label(
 )
 
 name = tkinter.Label(
-    text="Shannon",
+    text=bioGenerator.get_name(),
     fg="white",
     bg="black"
 )
@@ -32,7 +32,10 @@ description = tkinter.Text(
     window, height=6, width=50
 )
 
+description.insert(tkinter.END, bioGenerator.get_bio())
+description.insert(tkinter.END, "\n\n")
 description.insert(tkinter.END, bioGenerator.get_cat_fact())
+description.configure(state='disabled')
 
 like = tkinter.Button(baseFrame, text="Like", fg="green", width=10, height=2, command = likeCat)
 
