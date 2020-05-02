@@ -1,12 +1,23 @@
 import tkinter
 import bioGenerator
+import chatWindow
+import api
+import random
 from PIL import Image, ImageTk
 
-def likeCat():
-    print("hi")
+def likeCat(catName, imgPath):
+    chatWindow.chatWindow(catName, str(imgPath))
+    current_index = current_index + 1
 
 def dislikeCat():
     print("bye")
+    current_index = current_index + 1
+
+def getImage(current_index):
+    imgPath = "img/cat" + str(current_index) + ".jpg"
+    catName = bioGenerator.get_name()
+    return (imgPath, catName)
+
 
 window = tkinter.Tk()
 window.title("RediCatz")
@@ -16,6 +27,11 @@ window.resizable(False, False)
 
 baseFrame = tkinter.Frame(window, width=400, height=100, background="Red")
 
+current_index = random.randint(1, 100)
+
+imgPath = "img/cat" + str(current_index) + ".jpg"
+catName = bioGenerator.get_name()
+
 label = tkinter.Label(
     text="RediCatz, Meet Cats in your Area",
     fg="white",
@@ -23,7 +39,7 @@ label = tkinter.Label(
 )
 
 name = tkinter.Label(
-    text=bioGenerator.get_name(),
+    text=catName,
     fg="white",
     bg="black"
 )
@@ -37,11 +53,11 @@ description.insert(tkinter.END, "\n\n")
 description.insert(tkinter.END, bioGenerator.get_cat_fact())
 description.configure(state='disabled')
 
-like = tkinter.Button(baseFrame, text="Like", fg="green", width=10, height=2, command = likeCat)
+like = tkinter.Button(baseFrame, text="Like", fg="green", width=10, height=2, command = lambda: likeCat(catName, imgPath))
 
 dislike = tkinter.Button(baseFrame, text="Dislike", fg="red", width=10, height=2, command = dislikeCat)
 
-loadedImage = Image.open("img/cat8.jpg")
+loadedImage = Image.open(imgPath)
 resize = loadedImage.resize((400, 400))
 
 loadedImage = ImageTk.PhotoImage(resize)
