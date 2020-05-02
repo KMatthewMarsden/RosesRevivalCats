@@ -1,4 +1,5 @@
 import tkinter
+import bioGenerator
 from PIL import Image, ImageTk
 
 def likeCat():
@@ -31,7 +32,7 @@ description = tkinter.Text(
     window, height=6, width=50
 )
 
-description.insert(tkinter.END, "ur AreaRediCatz, Meet Cats in your Area")
+description.insert(tkinter.END, bioGenerator.get_cat_fact())
 
 like = tkinter.Button(baseFrame, text="Like", fg="green", width=10, height=2, command = likeCat)
 
