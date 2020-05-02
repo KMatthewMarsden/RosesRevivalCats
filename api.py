@@ -1,19 +1,28 @@
 import requests
 
-url = 'https://www.reddit.com/r/catpictures.json?limit=100'
+class Page:
 
-response = requests.get(url, headers={'User-agent': 'KMM'})
+    def __init__(self, url):
+        response = requests.get(url, headers={'User-agent': 'KMM'})
+        if not response.ok:
+            print("Error: ", response.status_code)
+            exit()
+        data = response.json()['data']
+        self.posts = data['children']
+        self.after = data['after']
 
-if not response.ok:
-    print("Error: ", response.status_code)
-    exit()
-data = response.json()['data']['children']
+    def get_cat_pic(self, i):
+        post = self.posts[i]['data']
+        img_url = post['url']
+        img_req = requests.get(img_url)
+        if not img_req.ok:
+            print("Failed to fetch cat img")
+        return img_req.content
 
-for i in range(0, 100):
-    the_post = data[i]['data']
-    image_url = the_post['url']
-    image = requests.get(image_url)
-    print(image_url)
-    if(image.status_code == 200):
-        fileHandler = open('img/cat' + str(i) + '.jpg',mode='bx')
-        fileHandler.write(image.content)
+    def get_next_page(self):
+        new_url = f"https://www.reddit.com/r/catpictures.json?limit=100&after={self.after}"
+        return Page(new_url)
+
+
+def get_first_page():
+    return Page("https://www.reddit.com/r/catpictures.json?limit=100")
