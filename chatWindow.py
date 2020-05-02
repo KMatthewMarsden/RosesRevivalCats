@@ -23,7 +23,7 @@ def sendMsg(txtMsgBox, sendBox, catName):
     txtMsgBox.configure(state='disabled')
 
 def chatWindow(catName, img):
-    window = tkinter.Tk()
+    window = tkinter.Toplevel()
     window.title("Chat")
     window.geometry("400x600")
     window.configure(background='black')
@@ -58,8 +58,7 @@ def chatWindow(catName, img):
     
     send = tkinter.Button(baseFrame, text="Send", fg="Black", width=10, height=1, command = lambda: sendMsg(txtMsgBox, msgBox, catName))
     
-    
-    loadedImage = Image.open(img)
+    loadedImage = Image.open(str(img))
     resize = loadedImage.resize((20, 20))
 
     loadedImage = ImageTk.PhotoImage(resize)
@@ -78,4 +77,4 @@ def chatWindow(catName, img):
 
     window.mainloop()
 
-chatWindow("Barry", "img/cat8.jpg")
+#chatWindow("Barry", "img/cat8.jpg")
