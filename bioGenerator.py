@@ -1,4 +1,5 @@
 import requests
+import random
 
 user_agent = "KMM"
 
@@ -20,3 +21,8 @@ def get_bio():
         return "Didn't know what to put in my bio :)"
     bio = response.content
     return bio
+
+def get_name():
+    fname = "resource/cat_names.txt"
+    lines = open(fname).read().splitlines()
+    return random.choice(lines)
